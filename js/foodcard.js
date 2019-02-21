@@ -1,3 +1,26 @@
+function initLoadCards(){
+    loadSkeletons();
+    var src = "https://images.unsplash.com/photo-1475778057357-d35f37fa89dd?dpr=1&auto=compress,format&fit=crop&w=1920&h=&q=80&cs=tinysrgb&crop=";
+    var avatar_src = "https://i.imgsafe.org/a4/a4bb9acc5e.jpeg";
+    var recipie_title = "Magic Sauce";
+    var numberStars = "69";
+    var textMetadata = "This is a recipie for some magic sauce.  It is the best sauce.  It is S A L T Y.  It is also sweet.  Finally... It is SPICY. SALTY. SWEET. SAUCE.  Thanku pls upvote. ";
+    
+    var col1 = buildCardColumn(src, avatar_src, recipie_title, numberStars, textMetadata);
+    var col2 = buildCardColumn(src, avatar_src, recipie_title, numberStars, textMetadata);
+    var col3 = buildCardColumn(src, avatar_src, recipie_title, numberStars, textMetadata);
+    $("#skely").empty();
+    $("#skely").remove();
+    $("#skely").empty();
+    $("#skely").remove();
+    $("#skely").empty();
+    $("#skely").remove();
+    $("#coly").append(col1);
+    $("#coly").append(col2);
+    $("#coly").append(col3);
+    return 0;
+}
+
 function buildCardColumn(src, avatar_src, recipie_title, numberStars, textMetadata){
     var rawImage = $("<img>").attr("src", src);
     var figure = $("<figure>").addClass("image").append(rawImage);
@@ -12,7 +35,7 @@ function buildCardColumn(src, avatar_src, recipie_title, numberStars, textMetada
 
     var title = $("<p>").addClass("title is-4 no-padding");
     title.append(recipie_title);
-    var stars = $("<p>").addClass("subtitle is-6");
+    var stars = $("<p>").addClass("title is-6");
     stars.append("Stars: " + numberStars);
     var metaData = $("<div>").addClass("media-content").append(title);
     metaData.append(stars);
@@ -54,25 +77,42 @@ function buildSkeletonColumn(){
     skeletonWrapper.append(SkeletonWrapperBody);
     var card = $("<div>").addClass("card large").append(skeletonWrapper);
     var column = $("<div>").addClass("column is-one-third").append(card);
+    column.attr("id", "skely");
     return column
 }
 
 function loadSkeletons(){
+    $("#skely").empty();
+    $("#skely").remove();
+    $("#skely").empty();
+    $("#skely").remove();
+    $("#skely").empty();
+    $("#skely").remove();
     var skeleton1 = buildSkeletonColumn();
     var skeleton2 = buildSkeletonColumn();
     var skeleton3 = buildSkeletonColumn();
-    var columns = document.getElementById("coly");
     $("#coly").append(skeleton1);
     $("#coly").append(skeleton2);
     $("#coly").append(skeleton3);
+    return 0;
 }
 
-function loadCards(){
-
+function updateCards(){
+    if($(window).scrollTop() == $(document).height() - $(window).height()) {
+        var src = "https://images.unsplash.com/photo-1475778057357-d35f37fa89dd?dpr=1&auto=compress,format&fit=crop&w=1920&h=&q=80&cs=tinysrgb&crop=";
+        var avatar_src = "https://i.imgsafe.org/a4/a4bb9acc5e.jpeg";
+        var recipie_title = "Magic Sauce";
+        var numberStars = "69";
+        var textMetadata = "This is a recipie for some magic sauce.  It is the best sauce.  It is S A L T Y.  It is also sweet.  Finally... It is SPICY. SALTY. SWEET. SAUCE.  Thanku pls upvote. ";
+        var col1 = buildCardColumn(src, avatar_src, recipie_title, numberStars, textMetadata);
+        var col2 = buildCardColumn(src, avatar_src, recipie_title, numberStars, textMetadata);
+        var col3 = buildCardColumn(src, avatar_src, recipie_title, numberStars, textMetadata);
+        $("#coly").append(col1);
+        $("#coly").append(col2);
+        $("#coly").append(col3);
+        loadSkeletons();
+    }
+    return 0;
 }
-
-function appendCards() {
-    var card = $();
-}
-
-window.onload = loadSkeletons;
+window.onload = initLoadCards;
+window.addEventListener("scroll", updateCards);
